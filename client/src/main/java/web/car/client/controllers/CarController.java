@@ -18,15 +18,31 @@ public class CarController {
     public Object getIndex(){
         RestTemplate restTemplate = new RestTemplate();
         Object index = restTemplate.getForObject(this.url, String.class);
-        System.out.println("La réponse à mon getIndex =>" + index);
+        System.out.println("La réponse à getIndex =>" + index);
         return index;
     }
 
     @GetMapping("/car/{id}")
     public Object getCarById(@PathVariable int id){
         RestTemplate restTemplate = new RestTemplate();
-        Object index = restTemplate.getForObject(this.url+"/car/"+id, String.class);
-        System.out.println("La réponse à mon getCarById =>" + index);
-        return index;
+        Object targetCar = restTemplate.getForObject(this.url+"/car/"+id, String.class);
+        System.out.println("La réponse à getCarById =>" + targetCar);
+        return targetCar;
+    }
+
+    @GetMapping("/brand/{brand}")
+    public Object getCarByBrand(@PathVariable String brand){
+        RestTemplate restTemplate = new RestTemplate();
+        Object carsByBrand = restTemplate.getForObject(this.url+"/brand/"+brand, String.class);
+        System.out.println("La réponse à getCarByBrand =>" + carsByBrand);
+        return carsByBrand;
+    }
+
+    @GetMapping("/color/{color}")
+    public Object getCarByColor(@PathVariable String color){
+        RestTemplate restTemplate = new RestTemplate();
+        Object carsByColor = restTemplate.getForObject(this.url+"/color/"+color, String.class);
+        System.out.println("La réponse à getCarByColor =>" + carsByColor);
+        return carsByColor;
     }
 }
