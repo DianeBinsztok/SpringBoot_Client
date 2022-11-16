@@ -1,9 +1,8 @@
 package web.car.client.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import web.car.client.cars.Car;
 
@@ -13,35 +12,34 @@ import java.util.List;
 @RestController
 public class CarController {
 
-    private String url = "http://localhost:8080";
+    private String serverUrl = "http://localhost:8080";
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/client/")
+    @GetMapping("/client")
     public List<Car> getIndex(){
-        List index = this.restTemplate.getForObject(this.url, List.class);
-        System.out.println("La réponse à getIndex =>" + index);
-        return index;
+        return this.restTemplate.getForObject(this.serverUrl, List.class);
     }
 
     @GetMapping("/client/car/{id}")
     public Car getCarById(@PathVariable int id){
-        Car targetCar = this.restTemplate.getForObject(this.url+"/car/"+id, Car.class);
-        System.out.println("La réponse à getCarById =>" + targetCar);
-        return targetCar;
+        return this.restTemplate.getForObject(this.serverUrl+"/car/"+id, Car.class);
     }
 
     @GetMapping("/client/brand/{brand}")
     public List<Car> getCarByBrand(@PathVariable String brand){
-        List carsByBrand = this.restTemplate.getForObject(this.url+"/brand/"+brand, List.class);
-        System.out.println("La réponse à getCarByBrand =>" + carsByBrand);
-        return carsByBrand;
+        return this.restTemplate.getForObject(this.serverUrl+"/brand/"+brand, List.class);
     }
 
     @GetMapping("/client/color/{color}")
     public List<Car> getCarByColor(@PathVariable String color){
-        List carsByColor = this.restTemplate.getForObject(this.url+"/color/"+color, List.class);
-        System.out.println("La réponse à getCarByColor =>" + carsByColor);
-        return carsByColor;
+        return this.restTemplate.getForObject(this.serverUrl+"/color/"+color, List.class);
+    }
+
+    // Ne pas mettre de / à la fin de l'url, sinon Postman ne la trouve pas (réponse 404)
+    @PostMapping("/client/cars")
+    public void postNewCar(@RequestBody Car newCar){
+        HttpEntity<Car> car = new HttpEntity<Car>(newCar);
+        this.restTemplate.postForObject(this.serverUrl+"/cars/", car, List.class);
     }
 }
