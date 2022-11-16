@@ -21,4 +21,12 @@ public class CarController {
         System.out.println("La réponse à mon getIndex =>" + index);
         return index;
     }
+
+    @GetMapping("/car/{id}")
+    public Object getCarById(@PathVariable int id){
+        RestTemplate restTemplate = new RestTemplate();
+        Object index = restTemplate.getForObject(this.url+"/car/"+id, String.class);
+        System.out.println("La réponse à mon getCarById =>" + index);
+        return index;
+    }
 }
