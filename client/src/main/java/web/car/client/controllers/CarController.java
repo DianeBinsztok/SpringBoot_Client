@@ -48,4 +48,9 @@ public class CarController {
         HttpEntity<Car> car = new HttpEntity<Car>(newSpecCar);
         this.restTemplate.put(this.serverUrl+"/update/"+id, car, List.class);
     }
+
+    @DeleteMapping ("/client/delete/{id}")
+    public void delete(@PathVariable int id){
+        this.restTemplate.delete(this.serverUrl+"/delete/"+id, List.class);
+    }
 }
