@@ -42,4 +42,10 @@ public class CarController {
         HttpEntity<Car> car = new HttpEntity<Car>(newCar);
         this.restTemplate.postForObject(this.serverUrl+"/cars/", car, List.class);
     }
+
+    @PutMapping("/client/update/{id}")
+    public void update(@PathVariable int id, @RequestBody Car newSpecCar){
+        HttpEntity<Car> car = new HttpEntity<Car>(newSpecCar);
+        this.restTemplate.put(this.serverUrl+"/update/"+id, car, List.class);
+    }
 }
