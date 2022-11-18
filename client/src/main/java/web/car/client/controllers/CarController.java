@@ -20,10 +20,6 @@ public class CarController {
     @Autowired
     private RestTemplate restTemplate;
 
-//    @GetMapping(value= {"/client", "/client/index"})
-//    public List<Car> getIndex(){
-//        return this.restTemplate.getForObject(this.serverUrl, List.class);
-//    }
     @GetMapping(value= {"/client", "/client/index"})
     public String getIndex(Model model){
         List cars =  this.restTemplate.getForObject(this.serverUrl, List.class);
@@ -33,8 +29,10 @@ public class CarController {
     }
 
     @GetMapping("/client/car/{id}")
-    public Car getCarById(@PathVariable int id){
-        return this.restTemplate.getForObject(this.serverUrl+"/car/"+id, Car.class);
+    public String getCarById(@PathVariable int id, Model model){
+        Car car = this.restTemplate.getForObject(this.serverUrl+"/car/"+id, Car.class);
+        model.addAttribute("car", car);
+        return "carDetail";
     }
 
     @GetMapping("/client/brand/{brand}")
