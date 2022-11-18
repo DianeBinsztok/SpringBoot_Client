@@ -45,8 +45,11 @@ public class CarController {
     // à quoi sert le dernier argument List.class ?
 
     @GetMapping("/client/color/{color}")
-    public List<Car> getCarByColor(@PathVariable String color){
-        return this.restTemplate.getForObject(this.serverUrl+"/color/"+color, List.class);
+    public String getCarByColor(@PathVariable String color, Model model){
+        List<Car> cars = this.restTemplate.getForObject(this.serverUrl+"/color/"+color, List.class);
+        model.addAttribute("cars", cars);
+        model.addAttribute("title", "All our available "+color+" vehicles");
+        return "index";
     }
 
     // Ne pas mettre de / à la fin de l'url, sinon Postman ne la trouve pas (réponse 404)
