@@ -52,6 +52,14 @@ public class CarController {
         return "index";
     }
 
+    // En cours:
+    @GetMapping(value = "/client/cars")
+    public String addCarForm(Model model){
+        model.addAttribute("title", "Add a new vehicle to our park");
+        model.addAttribute("car", new Car());
+        return "newCarForm";
+    }
+
     // Ne pas mettre de / à la fin de l'url, sinon Postman ne la trouve pas (réponse 404)
     @PostMapping("/client/cars")
     public void postNewCar(@RequestBody Car newCar){

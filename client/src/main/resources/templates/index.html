@@ -11,14 +11,14 @@
     <ul>
         <tr th:each="car: ${cars}">
             <li>
-                <td th:text="${car.id}"/>
+                <td th:number="${car.id}"/>
                 <td th:text="${car.brand}" />
                 <td th:text="${car.model}" />
                 <td th:text="${car.color}" />
         </tr>
         </li>
     </ul>
-    <form th:action="@{/cars}">
+    <form th:action="@{/client/cars}">
         <input type="submit" value="Add a new vehicle" />
     </form>
 </main>

@@ -3,10 +3,12 @@ package web.car.client.cars;
 
 public class Car {
 
-    private final long id;
-    private final String model;
-    private final String brand;
-    private final String color;
+    private  long id;
+    private  String model;
+    private  String brand;
+    private  String color;
+
+    public Car(){}
 
     public Car(long id, String model, String brand, String color) {
         this.id = id;
