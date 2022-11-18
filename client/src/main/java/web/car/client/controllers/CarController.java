@@ -22,7 +22,7 @@ public class CarController {
 
     @GetMapping(value= {"/client", "/client/index"})
     public String getIndex(Model model){
-        List cars =  this.restTemplate.getForObject(this.serverUrl, List.class);
+        List<Car> cars =  this.restTemplate.getForObject(this.serverUrl, List.class);
         model.addAttribute("cars", cars);
         model.addAttribute("title", "All our available vehicles");
         return "index";
@@ -36,8 +36,11 @@ public class CarController {
     }
 
     @GetMapping("/client/brand/{brand}")
-    public List<Car> getCarByBrand(@PathVariable String brand){
-        return this.restTemplate.getForObject(this.serverUrl+"/brand/"+brand, List.class);
+    public String getCarByBrand(@PathVariable String brand, Model model){
+        List<Car> cars = this.restTemplate.getForObject(this.serverUrl+"/brand/"+brand, List.class);
+        model.addAttribute("cars", cars);
+        model.addAttribute("title", "All our available "+brand);
+        return "index";
     }
     // à quoi sert le dernier argument List.class ?
 
