@@ -2,6 +2,8 @@ package web.car.client.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import web.car.client.cars.Car;
@@ -9,16 +11,25 @@ import web.car.client.cars.Car;
 import java.util.List;
 
 //@JsonIgnoreProperties(ignoreUnknown = true) => ça sert à quoi?
-@RestController
+// Rest Controller envoie du JSON
+// si je veux envoyer un template, j'utilise l'annotation @Controller
+@Controller
 public class CarController {
 
     private String serverUrl = "http://localhost:8080";
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/client")
-    public List<Car> getIndex(){
-        return this.restTemplate.getForObject(this.serverUrl, List.class);
+//    @GetMapping(value= {"/client", "/client/index"})
+//    public List<Car> getIndex(){
+//        return this.restTemplate.getForObject(this.serverUrl, List.class);
+//    }
+    @GetMapping(value= {"/client", "/client/index"})
+    public String getIndex(Model model){
+        List cars =  this.restTemplate.getForObject(this.serverUrl, List.class);
+        model.addAttribute("cars", cars);
+        model.addAttribute("title", "All our available vehicles");
+        return "index";
     }
 
     @GetMapping("/client/car/{id}")
@@ -30,6 +41,7 @@ public class CarController {
     public List<Car> getCarByBrand(@PathVariable String brand){
         return this.restTemplate.getForObject(this.serverUrl+"/brand/"+brand, List.class);
     }
+    // à quoi sert le dernier argument List.class ?
 
     @GetMapping("/client/color/{color}")
     public List<Car> getCarByColor(@PathVariable String color){

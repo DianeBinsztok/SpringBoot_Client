@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Rental</title>
+</head>
+<tbody>
+<header><h1>Spring Test:</h1></header>
+<main>
+    <h2><td th:text="${title}"/></h2>
+    <ul>
+        <tr th:each="car: ${cars}">
+            <li>
+                <td th:text="${car.id}"/>
+                <td th:text="${car.brand}" />
+                <td th:text="${car.model}" />
+                <td th:text="${car.color}" />
+        </tr>
+        </li>
+    </ul>
+    <form th:action="@{/cars}">
+        <input type="submit" value="Add a new vehicle" />
+    </form>
+</main>
+<footer>Ceci est un test</footer>
+
+</tbody>
+</html>
