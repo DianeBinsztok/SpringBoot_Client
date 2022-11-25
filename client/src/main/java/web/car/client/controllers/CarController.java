@@ -62,9 +62,15 @@ public class CarController {
 
     // Ne pas mettre de / à la fin de l'url, sinon Postman ne la trouve pas (réponse 404)
     @PostMapping("/client/cars")
-    public void postNewCar(@RequestBody Car newCar){
-        HttpEntity<Car> car = new HttpEntity<Car>(newCar);
-        this.restTemplate.postForObject(this.serverUrl+"/cars/", car, List.class);
+    public String postNewCar(@ModelAttribute("Car") Car newCar){
+        //HttpEntity<Car> car = new HttpEntity<Car>(newCar);
+        int id = newCar.getId();
+        String model = newCar.getModel();
+        String brand = newCar.getBrand();
+        String color = newCar.getColor();
+        this.restTemplate.postForObject(this.serverUrl+"/cars", newCar, Car.class);
+        //return "index"; => renvoie la vue index, mais sur la même url (/client/cars), donc, sans les données
+        return "redirect:/client/";
     }
 
     @PutMapping("/client/update/{id}")

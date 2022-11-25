@@ -8,10 +8,10 @@
 <header><h1>Spring Test:</h1></header>
 <main>
     <h2><td th:text="${title}"/></h2>
-    <form action="#" th:action="@{/cars}"
+    <form action="#" th:action="@{/client/cars/}"
           th:object="${car}" method="POST">
 
-        <p>Id: <input type="text" th:field="*{id}" /></p>
+        <p style="visibility: hidden">Id: <input  type="number" th:field="*{id}" /></p>
         <p>Brand: <input type="text" th:field="*{brand}" /></p>
         <p>Model: <input type="text" th:field="*{model}" /></p>
         <p>Color: <input type="text" th:field="*{color}" /></p>
